@@ -15,7 +15,7 @@ const Login = ({ onLogin }) => {
       [e.target.name]: e.target.value
     });
     setError('');
-  };
+  }; 
 
   const handleSubmit = (e) => {
     e.preventDefault();
