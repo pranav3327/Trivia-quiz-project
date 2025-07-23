@@ -1,37 +1,31 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { AppBar, Toolbar, Typography, Button, Box, Avatar, Stack } from '@mui/material';
-import QuizIcon from '@mui/icons-material/Quiz';
 
 function Header({ user, onLogout }) {
   return (
-    <AppBar position="sticky" color="default" elevation={2} sx={{ mb: 2 }}>
-      <Toolbar>
-        <Stack direction="row" alignItems="center" spacing={2} sx={{ flexGrow: 1 }}>
-          <Avatar sx={{ bgcolor: 'primary.main', width: 40, height: 40 }}>
-            <QuizIcon />
-          </Avatar>
-          <Typography variant="h5" fontWeight={700} color="primary" component={Link} to="/" sx={{ textDecoration: 'none' }}>
-            Trivia Quiz
-          </Typography>
-        </Stack>
-        <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'center', gap: 2 }}>
-          <Button component={Link} to="/" color="primary" sx={{ fontWeight: 600 }}>Home</Button>
-          <Button component={Link} to="/daily" color="primary" sx={{ fontWeight: 600 }}>Daily Challenge</Button>
-          <Button component={Link} to="/leaderboard" color="primary" sx={{ fontWeight: 600 }}>Leaderboard</Button>
-        </Box>
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+    <header className="header">
+      <nav className="header-nav">
+        <div className="header-left">
+          <div className="header-avatar">❓</div>
+          <Link to="/" className="header-title">Trivia Quiz</Link>
+        </div>
+        <div className="header-center">
+          <Link to="/" className="header-link">Home</Link>
+          <Link to="/daily" className="header-link">Daily Challenge</Link>
+          <Link to="/leaderboard" className="header-link">Leaderboard</Link>
+        </div>
+        <div className="header-right">
           {user ? (
             <>
-              <Typography variant="subtitle1" color="primary" sx={{ fontWeight: 600 }}>{user.username}</Typography>
-              <Button variant="outlined" color="error" onClick={onLogout}>Logout</Button>
+              <span className="header-username">{user.username}</span>
+              <button className="header-logout-btn" onClick={onLogout}>Logout</button>
             </>
           ) : (
-            <Button component={Link} to="/login" variant="contained" color="primary">Login</Button>
+            <Link to="/login" className="header-login-btn">Login</Link>
           )}
-        </Box>
-      </Toolbar>
-    </AppBar>
+        </div>
+      </nav>
+    </header>
   );
 }
 

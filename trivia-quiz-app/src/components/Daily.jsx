@@ -1,6 +1,5 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
-import { Box, Typography, Button, Paper, Stack, Alert, Container } from '@mui/material';
 
 const Daily = ({ username }) => {
   const [question, setQuestion] = useState(null);
@@ -77,40 +76,36 @@ const Daily = ({ username }) => {
   };
 
   if (!question) return (
-    <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" minHeight="400px" gap={2}>
-      <Typography variant="h6">Loading daily challenge...</Typography>
-    </Box>
+    <div className="daily-loading">
+      <h3>Loading daily challenge...</h3>
+    </div>
   );
 
   return (
-    <Container maxWidth="sm" sx={{ mt: 8 }}>
-      <Paper elevation={4} sx={{ p: 4, borderRadius: 4 }}>
-        <Stack spacing={3}>
-          <Typography variant="h4" fontWeight={700} color="primary" align="center" gutterBottom>
-            Daily Challenge
-          </Typography>
-          <Typography variant="h6" align="center">{question.question}</Typography>
-          <Stack spacing={2}>
-            {question.options.map((opt, i) => (
-              <Button
-                key={i}
-                variant={selected ? (opt === question.correct ? 'contained' : 'outlined') : 'outlined'}
-                color={selected ? (opt === question.correct ? 'success' : (opt === selected ? 'error' : 'primary')) : 'primary'}
-                size="large"
-                fullWidth
-                sx={{ fontWeight: 600, borderRadius: 2, textTransform: 'none' }}
-                onClick={() => !hasAnswered && handleSelect(opt)}
-                disabled={hasAnswered}
-              >
-                {opt}
-              </Button>
-            ))}
-          </Stack>
-          {feedback && <Alert severity={feedback.startsWith('Correct') ? 'success' : 'error'}>{feedback}</Alert>}
-          {hasAnswered && <Typography color="text.secondary" align="center">You've already answered today's challenge.</Typography>}
-        </Stack>
-      </Paper>
-    </Container>
+    <div className="daily-container">
+      <div className="daily-box">
+        <h2 className="daily-title">Daily Challenge</h2>
+        <div className="daily-question">{question.question}</div>
+        <div className="daily-options">
+          {question.options.map((opt, i) => (
+            <button
+              key={i}
+              className={`daily-option-btn${selected ? (opt === question.correct ? ' correct' : (opt === selected ? ' incorrect' : '')) : ''}`}
+              onClick={() => !hasAnswered && handleSelect(opt)}
+              disabled={hasAnswered}
+            >
+              {opt}
+            </button>
+          ))}
+        </div>
+        {feedback && (
+          <div className={`daily-feedback${feedback.startsWith('Correct') ? ' success' : ' error'}`}>{feedback}</div>
+        )}
+        {hasAnswered && (
+          <div className="daily-answered-note">You've already answered today's challenge.</div>
+        )}
+      </div>
+    </div>
   );
 };
 

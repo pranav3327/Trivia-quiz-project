@@ -1,7 +1,6 @@
 // src/components/Results.jsx
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Box, Typography, Button, Paper, Stack, Container } from '@mui/material';
 
 const Results = () => {
   const navigate = useNavigate();
@@ -18,24 +17,16 @@ const Results = () => {
   };
 
   return (
-    <Container maxWidth="sm" sx={{ mt: 8 }}>
-      <Paper elevation={5} sx={{ p: 5, borderRadius: 4 }}>
-        <Stack spacing={3} alignItems="center">
-          <Typography variant="h4" fontWeight={700} color="primary" align="center" gutterBottom>
-            Quiz Results
-          </Typography>
-          <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" sx={{ mb: 2 }}>
-            <Typography variant="h2" fontWeight={800} color="secondary" gutterBottom>
-              {score} / {total}
-            </Typography>
-            <Typography variant="h6" color="text.secondary" align="center">
-              {getMessage()}
-            </Typography>
-          </Box>
-          <Button variant="contained" color="primary" size="large" onClick={() => navigate('/')}>Go Home</Button>
-        </Stack>
-      </Paper>
-    </Container>
+    <div className="results-container">
+      <div className="results-box">
+        <h2 className="results-title">Quiz Results</h2>
+        <div className="results-score-section">
+          <div className="results-score">{score} / {total}</div>
+          <div className="results-message">{getMessage()}</div>
+        </div>
+        <button className="results-home-btn" onClick={() => navigate('/')}>Go Home</button>
+      </div>
+    </div>
   );
 };
 

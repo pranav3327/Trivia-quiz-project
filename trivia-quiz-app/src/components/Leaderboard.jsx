@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Typography, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Button, Stack, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Container } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 const categoryNames = {
@@ -41,57 +40,53 @@ const Leaderboard = ({ onBack }) => {
   };
 
   return (
-    <Container maxWidth="md" sx={{ mt: 8 }}>
-      <Paper elevation={5} sx={{ p: 4, borderRadius: 4 }}>
-        <Typography variant="h4" fontWeight={700} color="primary" align="center" gutterBottom>
-          Top Quiz Scores
-        </Typography>
+    <div className="leaderboard-container">
+      <div className="leaderboard-box">
+        <h2 className="leaderboard-title">Top Quiz Scores</h2>
         {attempts.length === 0 ? (
-          <Typography variant="body1" color="text.secondary" align="center" sx={{ my: 4 }}>
-            No attempts yet. Try a quiz!
-          </Typography>
+          <p className="leaderboard-empty">No attempts yet. Try a quiz!</p>
         ) : (
-          <TableContainer>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell>Quiz Topic</TableCell>
-                  <TableCell>Your Score</TableCell>
-                  <TableCell>Out of</TableCell>
-                  <TableCell>Attempted On</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
+          <div className="leaderboard-table-wrapper">
+            <table className="leaderboard-table">
+              <thead>
+                <tr>
+                  <th>Quiz Topic</th>
+                  <th>Your Score</th>
+                  <th>Out of</th>
+                  <th>Attempted On</th>
+                </tr>
+              </thead>
+              <tbody>
                 {attempts.map((attempt, index) => (
-                  <TableRow key={index}>
-                    <TableCell>{categoryNames[attempt.category] || attempt.category}</TableCell>
-                    <TableCell>{attempt.score}</TableCell>
-                    <TableCell>{attempt.total}</TableCell>
-                    <TableCell>{new Date(attempt.timestamp).toLocaleString()}</TableCell>
-                  </TableRow>
+                  <tr key={index}>
+                    <td>{categoryNames[attempt.category] || attempt.category}</td>
+                    <td>{attempt.score}</td>
+                    <td>{attempt.total}</td>
+                    <td>{new Date(attempt.timestamp).toLocaleString()}</td>
+                  </tr>
                 ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
+              </tbody>
+            </table>
+          </div>
         )}
-        <Stack direction="row" spacing={2} justifyContent="center" sx={{ mt: 4 }}>
-          <Button variant="outlined" color="primary" onClick={handleBack}>Back</Button>
-          <Button variant="contained" color="error" onClick={handleReset}>Reset Leaderboard</Button>
-        </Stack>
-        <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
-          <DialogTitle>Reset Leaderboard</DialogTitle>
-          <DialogContent>
-            <DialogContentText>
-              Are you sure you want to clear the leaderboard? This action cannot be undone.
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={() => setOpenDialog(false)} color="primary">Cancel</Button>
-            <Button onClick={confirmReset} color="error" variant="contained">Reset</Button>
-          </DialogActions>
-        </Dialog>
-      </Paper>
-    </Container>
+        <div className="leaderboard-actions">
+          <button className="leaderboard-back-btn" onClick={handleBack}>Back</button>
+          <button className="leaderboard-reset-btn" onClick={handleReset}>Reset Leaderboard</button>
+        </div>
+        {openDialog && (
+          <div className="leaderboard-modal-overlay">
+            <div className="leaderboard-modal">
+              <h3>Reset Leaderboard</h3>
+              <p>Are you sure you want to clear the leaderboard? This action cannot be undone.</p>
+              <div className="leaderboard-modal-actions">
+                <button onClick={() => setOpenDialog(false)}>Cancel</button>
+                <button className="leaderboard-modal-reset-btn" onClick={confirmReset}>Reset</button>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
   );
 };
 
